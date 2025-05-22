@@ -17,12 +17,8 @@ if ($input_pass !== $correct_pass) {
     echo "Hibás jelszó. Átirányítás a police.hu-ra 3 másodperc múlva...";
     exit;
 }
-$host = getenv('RENDER_DB_HOST');
-$user = getenv('RENDER_DB_USER');
-$pass = getenv('RENDER_DB_PASSWORD');
-$db   = getenv('RENDER_DB_NAME');
+$conn = new mysqli("localhost", "root", "root", "adatok");
 
-$conn = new mysqli($host, $user, $pass, $db);
 $stmt = $conn->prepare("SELECT Titkos FROM tabla WHERE Username = ?");
 $stmt->bind_param("s", $input_user);
 $stmt->execute();
