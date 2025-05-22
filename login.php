@@ -18,7 +18,7 @@ if ($input_pass !== $correct_pass) {
     exit;
 }
 
-$conn = new mysqli("host.docker.internal", "root", "root", "adatok");
+$conn = new mysqli("localhost", "root", "root", "adatok");
 
 $stmt = $conn->prepare("SELECT Titkos FROM tabla WHERE Username = ?");
 $stmt->bind_param("s", $input_user);
