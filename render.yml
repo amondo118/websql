@@ -4,11 +4,17 @@ services:
     dockerfile: Dockerfile
     envVars:
       - key: DB_HOST
-        value: ${DB_INTERNAL_HOST}  # Will be provided by Render
+        fromDatabase:
+          name: mysqldb
+          property: host
       - key: DB_USER
-        value: ${DB_USER}
+        fromDatabase:
+          name: mysqldb
+          property: user
       - key: DB_PASS
-        value: ${DB_PASSWORD}
+        fromDatabase:
+          name: mysqldb
+          property: password
       - key: DB_NAME
         value: adatok
     numInstances: 1
@@ -16,6 +22,5 @@ services:
 databases:
   - name: mysqldb
     databaseName: adatok
-    user: root
     plan: free
     technology: mysql
