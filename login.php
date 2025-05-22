@@ -13,8 +13,8 @@ if (!isset($users[$input_user])) {
 
 $correct_pass = $users[$input_user];
 if ($input_pass !== $correct_pass) {
-    echo "Hibás jelszó. Átirányítás a police.hu-ra 3 másodperc múlva...";
     header("refresh:3;url=https://www.police.hu");
+    echo "Hibás jelszó. Átirányítás a police.hu-ra 3 másodperc múlva...";
     exit;
 }
 
