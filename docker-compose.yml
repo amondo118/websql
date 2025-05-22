@@ -1,28 +1,32 @@
 version: '3.8'
 
 services:
-  app:
+  web:
     build: .
     ports:
-      - "8000:80"
-    extra_hosts:
-      - "host.docker.internal:host-gateway"  # Linux fix
+      - "10000:10000"  # Match your PHP server port
     environment:
-      DB_HOST: mysql  # Connect to mysql service directly
+      DB_HOST: db
       DB_USER: root
-      DB_PASS: root
+      DB_PASS: ${MYSQL_ROOT_PASSWORD}
       DB_NAME: adatok
     depends_on:
-      - mysql
+      db:
+        condition: service_healthy
 
-  mysql:
+  db:
     image: mysql:5.7
     environment:
-      MYSQL_ROOT_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: adatok
     volumes:
       - mysql_data:/var/lib/mysql
       - ./adatok.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 10s
+      retries: 5
 
 volumes:
   mysql_data:

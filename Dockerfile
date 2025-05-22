@@ -6,10 +6,10 @@ RUN apt-get update && \
     apt-get install -y \
     libzip-dev \
     unzip \
-    iputils-ping && \
-    docker-php-ext-install mysqli pdo pdo_mysql && \
-    a2enmod rewrite
+    && docker-php-ext-install mysqli pdo pdo_mysql \
+    && a2enmod rewrite
 
 COPY . .
 
-EXPOSE 80
+EXPOSE 10000
+CMD ["php", "-S", "0.0.0.0:10000", "-t", "."]
