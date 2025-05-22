@@ -1,5 +1,5 @@
 <?php
-require 'decode_password_file.php';
+require 'decode_password.php';
 
 $users = decode_password('password.txt');
 
@@ -31,7 +31,6 @@ $stmt->fetch();
 $stmt->close();
 $conn->close();
 
-// Sikeres belépés: Színes oldal
 echo "<body style='background-color: $szin; color: white;'>";
 echo "<h1>Sikeres belépés!</h1>";
 echo "<p>Kedvenc színed: <strong>$szin</strong></p>";

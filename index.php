@@ -1,5 +1,4 @@
 <?php
-// Kezdőlap - kiírja a nevet és Neptun kódot
 echo "<h2>Név: Kovács Péter | Neptun: ABC123</h2>";
 ?>
 
