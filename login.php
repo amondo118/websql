@@ -6,10 +6,10 @@ $input_user = $_POST['username'] ?? '';
 $input_pass = $_POST['password'] ?? '';
 
 // Get database credentials from environment (Render will provide these)
-$db_host = getenv('DB_HOST') ?: 'fdb1028.awardspace.net';
-$db_user = getenv('DB_USER') ?: '4638025_adatok';
-$db_pass = getenv('DB_PASS') ?: 'miasusmusfizikus708';
-$db_name = getenv('DB_NAME') ?: '4638025_adatok';
+$db_host =  'fdb1028.awardspace.net';
+$db_user = '4638025_adatok';
+$db_pass =  'miasusmusfizikus708';
+$db_name= 'table';
 
 // Connect to MySQL
 $conn = new mysqli($db_host, $db_user, $db_pass, $db_name);
