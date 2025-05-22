@@ -18,11 +18,15 @@ if ($input_pass !== $correct_pass) {
     exit;
 }
 $conn = new mysqli(
-    getenv('DB_HOST'), 
-    getenv('DB_USER'), 
-    getenv('DB_PASS'), 
-    getenv('DB_NAME')
+    getenv('DB_HOST') ?: 'mysql',  // Default to 'mysql' service name
+    getenv('DB_USER') ?: 'root',
+    getenv('DB_PASS') ?: 'root',
+    getenv('DB_NAME') ?: 'adatok'
 );
+
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
 
 $stmt = $conn->prepare("SELECT Titkos FROM tabla WHERE Username = ?");
 $stmt->bind_param("s", $input_user);
