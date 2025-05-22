@@ -1,6 +1,20 @@
-FROM php:8.1-cli
+FROM php:8.1-apache
 
-WORKDIR /app
+WORKDIR /var/www/html
+
+RUN apt-get update && \
+    apt-get install -y \
+    libzip-dev \
+    unzip \
+    default-mysql-client && \
+    docker-php-ext-install mysqli pdo pdo_mysql && \
+    a2enmod rewrite
+
 COPY . .
-RUN docker-php-ext-install mysqli
-CMD ["php", "-S", "0.0.0.0:10000", "-t", "."]
+
+ENV DB_HOST=host.docker.internal
+ENV DB_USER=root
+ENV DB_PASS=root
+ENV DB_NAME=adatok
+
+EXPOSE 80
