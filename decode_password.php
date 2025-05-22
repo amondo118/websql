@@ -1,5 +1,5 @@
 <?php
-function decode_password_file($filename) {
+function decode_password($filename) {
     $key = [5, -14, 31, -9, 3];
     $decoded = [];
 
