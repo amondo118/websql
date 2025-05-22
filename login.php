@@ -18,7 +18,7 @@ if ($input_pass !== $correct_pass) {
     exit;
 }
 
-$conn = new mysqli("localhost", "root", "", "adatok");
+$conn = new mysqli("127.0.0.1", "root", "", "adatok");
 if ($conn->connect_error) {
     die("Sikertelen kapcsolódás: " . $conn->connect_error);
 }
