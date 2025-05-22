@@ -1,15 +1,6 @@
 <?php
 require 'decode_password.php';
 
-$users = decode_password('password.txt');
-
-$input_user = $_POST['username'];
-$input_pass = $_POST['password'];
-
-if (!isset($users[$input_user])) {
-    echo "Nincs ilyen felhasználó.";
-    exit;
-}
 
 $correct_pass = $users[$input_user];
 if ($input_pass !== $correct_pass) {
@@ -17,15 +8,33 @@ if ($input_pass !== $correct_pass) {
     echo "Hibás jelszó. Átirányítás a police.hu-ra 3 másodperc múlva...";
     exit;
 }
-$conn = new mysqli(
-    getenv('DB_HOST') ?: 'mysql',  // Default to 'mysql' service name
-    getenv('DB_USER') ?: 'root',
-    getenv('DB_PASS') ?: 'root',
-    getenv('DB_NAME') ?: 'adatok'
-);
+$db_host = getenv('DB_HOST') ?: 'localhost';
+$db_user = getenv('DB_USER') ?: 'root';
+$db_pass = getenv('DB_PASS') ?: '';
+$db_name = getenv('DB_NAME') ?: 'adatok';
 
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+// Connect to MySQL
+try {
+    $conn = new mysqli($db_host, $db_user, $db_pass, $db_name);
+    
+    if ($conn->connect_error) {
+        throw new Exception("MySQL connection failed: " . $conn->connect_error);
+    }
+
+    // Rest of your login logic...
+    $users = decode_password('password.txt');
+    $input_user = $_POST['username'];
+    $input_pass = $_POST['password'];
+
+    if (!isset($users[$input_user])) {
+        echo "Nincs ilyen felhasználó.";
+        exit;
+    }
+
+    // ... rest of your code
+
+} catch (Exception $e) {
+    die("Database error: " . $e->getMessage());
 }
 
 $stmt = $conn->prepare("SELECT Titkos FROM tabla WHERE Username = ?");

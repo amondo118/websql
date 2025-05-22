@@ -2,21 +2,20 @@ services:
   - type: web
     name: php-app
     dockerfile: Dockerfile
-    dockerContext: .
     envVars:
       - key: DB_HOST
-        value: db
+        value: ${DB_INTERNAL_HOST}  # Will be provided by Render
       - key: DB_USER
-        value: root
+        value: ${DB_USER}
       - key: DB_PASS
-        fromService:
-          type: postgres  # Note: Render converts MySQL to Postgres
-          name: db
-          property: connectionString
+        value: ${DB_PASSWORD}
+      - key: DB_NAME
+        value: adatok
     numInstances: 1
 
-  - type: postgres  # Render converts MySQL to Postgres automatically
-    name: db
+databases:
+  - name: mysqldb
     databaseName: adatok
     user: root
     plan: free
+    technology: mysql
