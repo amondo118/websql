@@ -18,10 +18,7 @@ if ($input_pass !== $correct_pass) {
     exit;
 }
 
-$conn = new mysqli("127.0.0.1", "root", "", "adatok");
-if ($conn->connect_error) {
-    die("Sikertelen kapcsolódás: " . $conn->connect_error);
-}
+$conn = new mysqli("db", "root", "root", "adatok");
 
 $stmt = $conn->prepare("SELECT Titkos FROM tabla WHERE Username = ?");
 $stmt->bind_param("s", $input_user);
