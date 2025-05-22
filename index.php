@@ -1,5 +1,5 @@
 <?php
-echo "<h2>Név: Kovács Péter | Neptun: ABC123</h2>";
+echo "<h2>Név: Muhi Barnabás | Neptun: Q366TB</h2>";
 ?>
 
 <form method="POST" action="login.php">
